@@ -32,7 +32,6 @@ Config.init([config_location])
 # Define the variable from the option in the module where you use it.
 api_key = Config.get("API", "apikey", None)
 api_secret = Config.get("API", "secret", None)
-auto_renew = int(Config.get("BOT", "autorenew", None, 0, 1))
 output_currency = Config.get('BOT', 'outputCurrency', 'BTC')
 end_date = Config.get('BOT', 'endDate')
 json_output_enabled = Config.has_option('BOT', 'jsonfile') and Config.has_option('BOT', 'jsonlogsize')
@@ -42,10 +41,12 @@ log = Logger(Config.get('BOT', 'jsonfile', ''), Config.get('BOT', 'jsonlogsize',
 api = Poloniex(api_key, api_secret)
 MaxToLend.init(Config, log)
 Data.init(api, log)
+
 Config.init(config_location, Data)
 Lending.init(Config, api, log, Data, MaxToLend, dry_run, Analysis)
 if Config.has_option('BOT', 'analyseCurrencies'):
     Analysis.init(Config, api, Data)
+
 
 
 print 'Welcome to Poloniex Lending Bot'
@@ -56,9 +57,6 @@ if web_server_enabled:  # Run web server
     import modules.WebServer as WebServer
     WebServer.initialize_web_server(Config)
 
-# if config includes autorenew - start by clearing the current loans
-if auto_renew == 1:
-    Lending.set_auto_renew(0)
 
 try:
     while True:
@@ -92,9 +90,7 @@ try:
             sys.stdout.flush()
             time.sleep(Lending.get_sleep_time())
             pass
-except KeyboardInterrupt:
-    if auto_renew == 1:
-        Lending.set_auto_renew(1)
+
     if web_server_enabled:
         WebServer.stop_web_server()
     log.log('bye')
