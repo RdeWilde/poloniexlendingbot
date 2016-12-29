@@ -90,7 +90,7 @@ try:
             sys.stdout.flush()
             time.sleep(Lending.get_sleep_time())
             pass
-
+except KeyboardInterrupt:
     if web_server_enabled:
         WebServer.stop_web_server()
     log.log('bye')
