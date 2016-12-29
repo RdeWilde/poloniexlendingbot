@@ -10,7 +10,6 @@ def init(api1, log1):
     global api, log
     api = api1
     log = log1
-    get_lending_currencies()
 
 
 def get_on_order_balances():

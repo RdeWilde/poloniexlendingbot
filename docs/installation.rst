@@ -69,7 +69,7 @@ Uploading the bot's files to Pythonanywhere
 Creating the Web App (Optional)
 -------------------------------
 1. If you would like to use the Webserver to view your bot's status, navigate to the "Web" tab.
-2. Add a new web app.i
+2. Add a new web app.
 3. Set the working directory to ``/home/<username>/poloniexlendingbot/www/``
 4. Set the static files to URL: ``/static/`` Directory: ``/home/<username>/poloniexlendingbot/www``
 5. Refresh your website.
